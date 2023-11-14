@@ -47,8 +47,7 @@ pub fn prep_env() {
 pub fn pf_create_dir(apath: &str) {
     let save_dir = Path::new(apath);
     if fs::metadata(save_dir).is_ok() {
-        fs::remove_dir_all(save_dir).expect("Unable to remove directory");
-        fs::create_dir_all(save_dir).expect("Unable to create directory");
+        println!("Directory exists: {}", apath)
     } else {
         fs::create_dir_all(save_dir).expect("Unable to create directory");
     }
