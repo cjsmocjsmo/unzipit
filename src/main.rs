@@ -86,6 +86,8 @@ pub fn process_gz_files() {
     {
         if e.metadata().unwrap().is_file() {
             let fname = e.path().to_string_lossy().to_string();
+            let fsplit = fname.split(".").collect::<Vec<&str>>();
+            let ext = fsplit.last().unwrap();
             if fname.contains("python3-openid") {
                 std::fs::remove_file(fname.clone()).unwrap();
             } else if fname.contains("torando") {
@@ -94,7 +96,7 @@ pub fn process_gz_files() {
                 std::fs::remove_file(fname.clone()).unwrap();
             } else if fname.contains("jqm-pagination-master") {
                 std::fs::remove_file(fname.clone()).unwrap();
-            } else {
+            } else if ext == &"gz" || ext == &"GZ" {
                 println!("processing gz file: \n{}", fname);
                 let path = Path::new(&fname);
                 if path.is_file() {
