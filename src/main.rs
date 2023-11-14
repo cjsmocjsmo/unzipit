@@ -16,10 +16,9 @@ fn main() {
     let _env = util::prep_env();
     let _mv_zip_files = util::mv_zip_files("/media/pipi/0123-4567/Images/".to_string());
 
-    let _gz = process_gz_files();
     let _zip = process_zip_files();
+    let _gz = process_gz_files();
     let _bz2 = process_bz2_files();
-
 
     // let zip_list = walk::walk_zip_dir("/media/pipi/0123-4567/ZIP/".to_string());
     // let pool = ThreadPool::new(num_cpus::get());
@@ -70,9 +69,9 @@ fn main() {
     //     println!("info: {:?}", info)
     // }
 
-    let found_zips = walk::walk_images_dir_for_zip_files("/media/pipi/0123-4567/Images/".to_string());
+    let found_zips =
+        walk::walk_images_dir_for_zip_files("/media/pipi/0123-4567/Images/".to_string());
     println!("found_zips: {:?}", found_zips);
-
 }
 
 pub fn process_gz_files() {
@@ -114,7 +113,8 @@ pub fn process_gz_files() {
                         let out_dir_path = Path::new(outdir.as_str());
 
                         a.unpack(out_dir_path).unwrap();
-                        fs::remove_file(fname).unwrap();
+                        println!("out_dir_path gz: {:#?}", out_dir_path);
+                        // fs::remove_file(fname).unwrap();
                     };
                 };
             };
@@ -168,14 +168,14 @@ pub fn process_zip_files() {
                                 std::io::copy(&mut file, &mut outfile).unwrap();
                             }
                         }
-                        fs::remove_file(fname.clone()).unwrap();
+                        println!("zip out_dir_path: {:#?}", out_dir_path)
+                        // fs::remove_file(fname.clone()).unwrap();
                     }
                 };
             };
         };
     }
 }
-
 
 pub fn process_bz2_files() {
     let apath = "/media/pipi/0123-4567/BZ2".to_string();
