@@ -1,0 +1,16 @@
+[package]
+name = "unzipit"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+walkdir = "2.3.2"
+flate2 = "1.0.28"
+tar = "0.4.40"
+bzip2 = "0.4.4"
+zip = "0.6"
+md5 = "0.7.0"
+threadpool = "1.8.1"
+num_cpus = "1.15.0"
