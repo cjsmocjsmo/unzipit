@@ -7,7 +7,6 @@ use walkdir::WalkDir;
 // use tar::Archive;
 // use zip::ZipArchive;
 
-
 pub fn prep_env() {
     let av_path = "/media/pipi/0123-4567/AV/";
     let converted_path = "/media/pipi/e9535df1-d952-4d78-b5d7-b82e9aa3a975/Converted/";
@@ -54,12 +53,6 @@ pub fn pf_create_dir(apath: &str) {
 }
 
 pub fn mv_zip_files(fname: String) {
-    let ziplist = ["zip", "ZIP", "gz", "GZ", "bz2", "BZ2"];
-
-    // let save_dir = Path::new("/media/pipi/0123-4567/AV/");
-    // if !fs::metadata(save_dir).unwrap().is_dir() {
-    //     fs::create_dir(save_dir).unwrap();
-    // }
 
     for e in WalkDir::new(fname)
         .follow_links(true)
@@ -70,47 +63,46 @@ pub fn mv_zip_files(fname: String) {
             let fname = e.path().to_string_lossy().to_string();
             let parts = &fname.split(".").collect::<Vec<&str>>();
             let ext = parts.last().unwrap();
-            if ziplist.contains(&ext) {
-                if ext == &"zip" || ext == &"ZIP" {
-                    let fparts = fname.split("/").collect::<Vec<&str>>();
-                    let filename = fparts.last().unwrap().replace(" ", "_");
-                    let addr = "/media/pipi/0123-4567/ZIP/".to_string() + &filename;
-                    match fs::rename(&fname, &addr) {
-                        Ok(_) => println!("Moved: {}", addr),
-                        Err(e) => println!("ZIP_Error: {}", e),
-                    };
-                } else if ext == &"gz" || ext == &"GZ" {
-                    let fparts = fname.split("/").collect::<Vec<&str>>();
-                    let filename = fparts.last().unwrap().replace(" ", "_");
-                    let addr = "/media/pipi/0123-4567/GZ1/".to_string() + &filename;
-                    match fs::rename(&fname, &addr) {
-                        Ok(_) => println!("Moved: {}", addr),
-                        Err(e) => println!("GZ_Error: {}", e),
-                    };
-                } else if ext == &"bz2" || ext == &"BZ2" {
-                    let fparts = fname.split("/").collect::<Vec<&str>>();
-                    let filename = fparts.last().unwrap().replace(" ", "_");
+
+            if ext == &"zip" || ext == &"ZIP" {
+                let fparts = fname.split("/").collect::<Vec<&str>>();
+                let filename = fparts.last().unwrap().replace(" ", "_");
+                let addr = "/media/pipi/0123-4567/ZIP/".to_string() + &filename;
+                match fs::rename(&fname, &addr) {
+                    Ok(_) => println!("Moved: {}", addr),
+                    Err(e) => println!("ZIP_Error: {}", e),
+                };
+            } else if ext == &"gz" || ext == &"GZ" {
+                let fparts = fname.split("/").collect::<Vec<&str>>();
+                let filename = fparts.last().unwrap().replace(" ", "_");
+                let addr = "/media/pipi/0123-4567/GZ1/".to_string() + &filename;
+                match fs::rename(&fname, &addr) {
+                    Ok(_) => println!("Moved: {}", addr),
+                    Err(e) => println!("GZ_Error: {}", e),
+                };
+            } else if ext == &"bz2" || ext == &"BZ2" {
+                let fparts = fname.split("/").collect::<Vec<&str>>();
+                let filename = fparts.last().unwrap().replace(" ", "_");
+                let addr = "/media/pipi/0123-4567/BZ2/".to_string() + &filename;
+                match fs::rename(&fname, &addr) {
+                    Ok(_) => println!("Moved: {}", addr),
+                    Err(e) => println!("BZ_Error: {}", e),
+                };
+            } else if ext == &"tar" {
+                let fparts = fname.split("/").collect::<Vec<&str>>();
+                let filename = fparts.last().unwrap();
+                if fname == "P-009.tar" {
+                    std::fs::remove_file(fname.clone()).unwrap();
+                } else {
                     let addr = "/media/pipi/0123-4567/BZ2/".to_string() + &filename;
                     match fs::rename(&fname, &addr) {
                         Ok(_) => println!("Moved: {}", addr),
                         Err(e) => println!("BZ_Error: {}", e),
                     };
-                } else if ext == &"tar" {
-                    let fparts = fname.split("/").collect::<Vec<&str>>();
-                    let filename = fparts.last().unwrap();
-                    if fname == "P-009.tar" {
-                        std::fs::remove_file(fname.clone()).unwrap();
-                    } else {
-                        let addr = "/media/pipi/0123-4567/BZ2/".to_string() + &filename;
-                        match fs::rename(&fname, &addr) {
-                            Ok(_) => println!("Moved: {}", addr),
-                            Err(e) => println!("BZ_Error: {}", e),
-                        };
-                    }
                 }
+            }
 
-                println!("Moved: {}", fname.clone())
-            };
+            println!("Moved: {}", fname.clone())
         }
     }
 }

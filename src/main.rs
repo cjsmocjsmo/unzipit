@@ -116,15 +116,14 @@ pub fn process_gz_files() {
 
 pub fn process_zip_files() {
     let apath = "/media/pipi/0123-4567/ZIP".to_string();
-    let ziplist = ["zip", "ZIP"];
 
-    for e in WalkDir::new(apath)
+    for z in WalkDir::new(apath)
         .follow_links(true)
         .into_iter()
-        .filter_map(|e| e.ok())
+        .filter_map(|z| z.ok())
     {
-        if e.metadata().unwrap().is_file() {
-            let fname = e.path().to_string_lossy().to_string();
+        if z.metadata().unwrap().is_file() {
+            let fname = z.path().to_string_lossy().to_string();
             println!("processing zip file: \n{}", fname);
             let path = Path::new(&fname);
             if path.is_file() {
@@ -132,7 +131,7 @@ pub fn process_zip_files() {
                 let fdigest = format!("{:?}", digest);
                 let parts = &fname.split(".").collect::<Vec<&str>>();
                 let ext = parts.last().unwrap();
-                if ziplist.contains(&ext) {
+                if ext == &"zip" || ext == &"ZIP" {
                     if fname.contains("Email_Photos.ZIP") {
                         fs::remove_file(fname.clone()).unwrap()
                     } else {
@@ -171,7 +170,6 @@ pub fn process_zip_files() {
 
 pub fn process_bz2_files() {
     let apath = "/media/pipi/0123-4567/BZ2".to_string();
-    let bz2list = ["bz2", "BZ2"];
 
     for e in WalkDir::new(apath)
         .follow_links(true)
@@ -187,7 +185,7 @@ pub fn process_bz2_files() {
                 let fdigest = format!("{:?}", digest);
                 let parts = &fname.split(".").collect::<Vec<&str>>();
                 let ext = parts.last().unwrap();
-                if bz2list.contains(&ext) {
+                if ext == &"bz2" || ext == &"BZ2" {
                     let tar = fs::File::open(fname.clone()).unwrap();
                     let dec = BzDecoder::new(tar);
                     let mut a = Archive::new(dec);
