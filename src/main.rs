@@ -14,6 +14,12 @@ pub mod walk;
 
 fn main() {
     let _env = util::prep_env();
+    let ext_list1 = walk::get_ext_list("/media/pipi/0123-4567/Images/".to_string());
+    println!("ext_list1: {:#?}", ext_list1);
+
+    let zip_files = walk::walk_images_dir_for_zip_files("/media/pipi/0123-4567/Images/".to_string());
+    println!("zip_files: {:#?}", zip_files);
+
     let _mv_zip_files = util::mv_zip_files("/media/pipi/0123-4567/Images/".to_string());
 
     let _zip = process_zip_files();
@@ -69,9 +75,9 @@ fn main() {
     //     println!("info: {:?}", info)
     // }
 
-    let found_zips =
-        walk::walk_images_dir_for_zip_files("/media/pipi/0123-4567/Images/".to_string());
-    println!("found_zips: {:?}", found_zips);
+    // let found_zips =
+    //     walk::walk_images_dir_for_zip_files("/media/pipi/0123-4567/Images/".to_string());
+    // println!("found_zips: {:?}", found_zips);
 }
 
 pub fn process_gz_files() {

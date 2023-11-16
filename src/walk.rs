@@ -110,3 +110,30 @@ pub fn walk_bz2_dir(apath: String) ->  Vec<String> {
 
     bz2list
 }
+
+pub fn get_ext_list(apath: String) ->  Vec<String> {
+    let mut idx = 0;
+    let mut extlist = Vec::new();
+    for e in WalkDir::new(apath)
+        .follow_links(true)
+        .into_iter()
+        .filter_map(|e| e.ok())
+    {
+        if e.metadata().unwrap().is_file() {
+            idx += 1;
+            let fname = e.path().to_string_lossy().to_string();
+            let path = Path::new(&fname);
+            if path.is_file() {
+                let parts = &fname.split(".").collect::<Vec<&str>>();
+                let ext = parts.last().unwrap();
+                if !extlist.contains(&ext.to_string()) {
+                    extlist.push(ext.to_string());
+                }
+            };
+        };
+    }
+
+    println!("Total files: {}\n", idx);
+
+    extlist
+}
