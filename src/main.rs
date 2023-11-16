@@ -112,7 +112,7 @@ pub fn process_gz_files() {
 
                         a.unpack(out_dir_path).unwrap();
                         println!("out_dir_path gz: {:#?}", out_dir_path);
-                        // fs::remove_file(fname).unwrap();
+                        fs::remove_file(fname).unwrap();
                     };
                 };
             };
@@ -165,8 +165,8 @@ pub fn process_zip_files() {
                                 std::io::copy(&mut file, &mut outfile).unwrap();
                             }
                         }
-                        println!("zip out_dir_path: {:#?}", out_dir_path)
-                        // fs::remove_file(fname.clone()).unwrap();
+                        println!("zip out_dir_path: {:#?}", out_dir_path);
+                        fs::remove_file(fname.clone()).unwrap();
                     }
                 };
             };
