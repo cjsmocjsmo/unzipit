@@ -14,19 +14,19 @@ pub mod walk;
 
 fn main() {
     let _env = util::prep_env();
-    let ext_list1 = walk::get_ext_list("/media/pipi/0123-4567/Images/".to_string());
+    let ext_list1 = walk::get_ext_list("/media/pipi/5F3E-726C/Images/".to_string());
     println!("ext_list1: {:#?}", ext_list1);
 
-    let _mv_zip_files = util::mv_zip_files("/media/pipi/0123-4567/Images/".to_string());
+    let _mv_zip_files = util::mv_zip_files("/media/pipi/5F3E-726C/Images/".to_string());
 
     let _zip = process_zip_files();
     let _gz = process_gz_files();
     let _bz2 = process_bz2_files();
 
-    let zip_files = walk::walk_images_dir_for_zip_files("/media/pipi/0123-4567/Images/".to_string());
+    let zip_files = walk::walk_images_dir_for_zip_files("/media/pipi/5F3E-726C/Images/".to_string());
     println!("zip_files: {:#?}", zip_files);
 
-    // let zip_list = walk::walk_zip_dir("/media/pipi/0123-4567/ZIP/".to_string());
+    // let zip_list = walk::walk_zip_dir("/media/pipi/5F3E-726C/ZIP/".to_string());
     // let pool = ThreadPool::new(num_cpus::get());
     // let (tx, rx) = channel();
     // for zip in zip_list.clone() {
@@ -42,7 +42,7 @@ fn main() {
     //     println!("info: {:?}", info)
     // }
 
-    // let gz_list = walk::walk_gz_dir("/media/pipi/0123-4567/GZ1/".to_string());
+    // let gz_list = walk::walk_gz_dir("/media/pipi/5F3E-726C/GZ1/".to_string());
     // let pool = ThreadPool::new(num_cpus::get());
     // let (tx, rx) = channel();
     // for gz in gz_list.clone() {
@@ -58,7 +58,7 @@ fn main() {
     //     println!("info: {:?}", info)
     // }
 
-    // let bz2_list = walk::walk_bz2_dir("/media/pipi/0123-4567/BZ2/".to_string());
+    // let bz2_list = walk::walk_bz2_dir("/media/pipi/5F3E-726C/BZ2/".to_string());
 
     // let pool = ThreadPool::new(num_cpus::get());
     // let (tx, rx) = channel();
@@ -76,12 +76,12 @@ fn main() {
     // }
 
     // let found_zips =
-    //     walk::walk_images_dir_for_zip_files("/media/pipi/0123-4567/Images/".to_string());
+    //     walk::walk_images_dir_for_zip_files("/media/pipi/5F3E-726C/Images/".to_string());
     // println!("found_zips: {:?}", found_zips);
 }
 
 pub fn process_gz_files() {
-    let apath = "/media/pipi/0123-4567/GZ1".to_string();
+    let apath = "/media/pipi/5F3E-726C/GZ1".to_string();
     let gzlist = ["gz", "GZ"];
 
     for e in WalkDir::new(apath)
@@ -106,7 +106,7 @@ pub fn process_gz_files() {
                         let dec = GzDecoder::new(tar);
                         let mut a = Archive::new(dec);
                         let outdir =
-                            "/media/pipi/0123-4567/Images/GZ1_Unzip/".to_string() + &fdigest;
+                            "/media/pipi/5F3E-726C/Images/GZ1_Unzip/".to_string() + &fdigest;
                         let _out_dir = fs::create_dir_all(outdir.clone()).unwrap();
                         let out_dir_path = Path::new(outdir.as_str());
 
@@ -121,7 +121,7 @@ pub fn process_gz_files() {
 }
 
 pub fn process_zip_files() {
-    let apath = "/media/pipi/0123-4567/ZIP".to_string();
+    let apath = "/media/pipi/5F3E-726C/ZIP".to_string();
 
     for z in WalkDir::new(apath)
         .follow_links(true)
@@ -144,7 +144,7 @@ pub fn process_zip_files() {
                         let mut archive =
                             ZipArchive::new(fs::File::open(fname.clone()).unwrap()).unwrap();
                         let outdir =
-                            "/media/pipi/0123-4567/Images/ZIP_Unzip/".to_string() + &fdigest;
+                            "/media/pipi/5F3E-726C/Images/ZIP_Unzip/".to_string() + &fdigest;
                         let _out_dir = fs::create_dir_all(outdir.clone()).unwrap();
                         let out_dir_path = Path::new(outdir.as_str());
                         for i in 0..archive.len() {
@@ -175,7 +175,7 @@ pub fn process_zip_files() {
 }
 
 pub fn process_bz2_files() {
-    let apath = "/media/pipi/0123-4567/BZ2".to_string();
+    let apath = "/media/pipi/5F3E-726C/BZ2".to_string();
 
     for e in WalkDir::new(apath)
         .follow_links(true)
@@ -195,7 +195,7 @@ pub fn process_bz2_files() {
                     let tar = fs::File::open(fname.clone()).unwrap();
                     let dec = BzDecoder::new(tar);
                     let mut a = Archive::new(dec);
-                    let outdir = "/media/pipi/0123-4567/Images/BZ2_Unzip/".to_string() + &fdigest;
+                    let outdir = "/media/pipi/5F3E-726C/Images/BZ2_Unzip/".to_string() + &fdigest;
                     let _out_dir = fs::create_dir_all(outdir.clone()).unwrap();
                     let out_dir_path = Path::new(outdir.as_str());
 
