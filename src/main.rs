@@ -17,14 +17,14 @@ fn main() {
     let ext_list1 = walk::get_ext_list("/media/pipi/0123-4567/Images/".to_string());
     println!("ext_list1: {:#?}", ext_list1);
 
-    let zip_files = walk::walk_images_dir_for_zip_files("/media/pipi/0123-4567/Images/".to_string());
-    println!("zip_files: {:#?}", zip_files);
-
     let _mv_zip_files = util::mv_zip_files("/media/pipi/0123-4567/Images/".to_string());
 
     let _zip = process_zip_files();
     let _gz = process_gz_files();
     let _bz2 = process_bz2_files();
+
+    let zip_files = walk::walk_images_dir_for_zip_files("/media/pipi/0123-4567/Images/".to_string());
+    println!("zip_files: {:#?}", zip_files);
 
     // let zip_list = walk::walk_zip_dir("/media/pipi/0123-4567/ZIP/".to_string());
     // let pool = ThreadPool::new(num_cpus::get());
